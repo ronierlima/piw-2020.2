@@ -1,0 +1,25 @@
+{
+  "name": "piw-social",
+  "version": "2.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "keywords": [
+    "nodeJS",
+    "expressJS",
+    "MongoDB",
+    "Mongoose",
+    "API"
+  ],
+  "author": "Ronier Lima",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "getmodule": "^1.0.0",
+    "mongoose": "^5.11.7",
+    "nodemon": "^2.0.6"
+  }
+}
