@@ -1,0 +1,51 @@
+
+.page-form {
+  padding: 2rem;
+  font-size: 1rem;
+ }
+
+.form-body {
+  margin: 20px 0px;
+  font-size: 1.2rem;
+  font-weight: 50;
+  color: var(--text);
+}
+
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-footer .form-submit{
+  width: 200px;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--white);
+  font-size: 1.5rem;
+
+  border-radius: 5px;
+  border: none;
+  background: var(--blue-dark);
+
+  cursor: pointer;
+}
+
+.form-footer .form-submit:hover{
+  background: var(--blue);
+}
+
+
+
+@media(max-width: 600px) {
+  .form-footer {
+    justify-content: center;
+  }
+
+  .form-footer .form-submit{
+    width: 100%;
+  }
+  
+}

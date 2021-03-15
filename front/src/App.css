@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --white: #FFF;
+  --background: #F2F3F5;
+  --gray-line: #DCDDE0;
+  --text: #666666;
+  --text-highlight: #B3B9FF;
+  --title: #2E384D;
+  --red:#E83F5B;
+  --green: #4CD62B;
+  --blue: #5965E0;
+  --blue-dark: #4953B8;
+  --blue-twiter: #2AA9E0;
+ 
+  --type-first: 'Inter', sans-serif;
+  --type-second: 'Spectral', Georgia;
+}
+
+@media(max-width: 1000px) {
+  html {
+    font-size: 93.75%;
+  }
+}
+
+@media(max-width: 720px) {
+  html {
+    font-size: 87.5%;
+  }
+}
+
+body {
+  padding-top: 4rem;  
+  background: var(--background);
+  color: var(--text);
+
+  scrollbar-width: none;
+}
+
+body, input, label, textarea, button {
+  font: 400 1rem var(--type-first);
+}
+
+ul,
+li {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  background: var(--background);
+}
+
+button{
+  display: block;
+  font-size: 1rem;
+  color: var(--text);
+}
+button:focus {
+  outline: none;
+}
+
+textarea {
+  padding: 10px;
+  width: 100%;
+  height: 40vh;
+  max-height: 300px;
+  resize: none;
+  border-radius: 5px;
+  border: 2px solid var(--title);
+  overflow: auto;
+}
+
+
+
+textarea:focus {
+  outline: none;
+
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  
+  max-width: 50rem;
+  padding: 0 1rem;
+  margin: 0 auto;
+
+}
+
+.center {
+  display: flex;
+  margin-top: 5rem;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
+textarea::-webkit-scrollbar {
+  width: 10px ;
+} 

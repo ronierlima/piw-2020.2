@@ -1,0 +1,65 @@
+.header {
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  background: var(--background);
+  top: 0px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.nav .items {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.separator {
+  margin: 0px 5px;
+  color: rgba(0, 0, 0, 0.1);
+}
+
+.nav .item:hover {
+  color: var(--title);
+}
+
+.nav .item.active {
+  color: var(--blue-dark);
+}
+
+.login {
+  display: flex;
+  align-items: center;
+}
+
+canvas {
+  width: 1.75rem !important;
+  height: 1.75rem !important;
+}
+
+.user {
+  width: 1.75rem !important;
+  height: 1.75rem !important;
+
+  margin-left: 0.5rem;
+  position: relative;
+  top: -1px;
+}
+
+.user:hover {
+  background: url("../../assets/sair.svg") no-repeat center center;
+}
+.user:hover canvas {
+  display: none;
+}

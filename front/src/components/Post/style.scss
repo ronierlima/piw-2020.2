@@ -1,0 +1,180 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin: 20px 0px;
+  border-radius: 10px;
+  border-bottom: 0.25rem solid var(--gray-line);
+}
+
+.card:hover {
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  width: auto;
+  font-size: 1.25rem;
+  margin: 20px 0px;
+  font-weight: 700;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.card canvas {
+  width: 2.25rem !important;
+  height: 2.25rem !important;
+}
+
+.card-header span {
+  font-weight: 300;
+  border-radius: 20px;
+  color: var(--title);
+  font-size: 1.5rem;
+}
+
+.card-body {
+  margin: 1rem 0px;
+  font-size: 1.2rem;
+  font-weight: 50;
+  font-style: oblique;
+  color: var(--text);
+}
+.card-body::before {
+  content: "";
+  display: inline-block;
+  position: relative;
+  width: 5px;
+  height: 1rem;
+  margin-right: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.card-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  & > span {
+    cursor: pointer;
+    color: var(--blue);
+
+    &:hover {
+      text-decoration: underline;
+      color: var(--blue-dark);
+    }
+  }
+}
+
+.card-actions {
+  width: auto;
+  font-size: 1.25rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.curtidas {
+  margin: 0px 5px;
+  font-size: 0.95rem;
+}
+
+.curtir {
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+}
+
+.curtir path:last-child {
+  fill: var(--text);
+}
+
+.descurtido path:last-child {
+  animation: show-down 1s forwards;
+  transform-origin: center;
+}
+
+.curtido path:last-child {
+  fill: var(--red);
+  animation: show-up 0.6s forwards;
+  transform-origin: center;
+}
+
+@keyframes show-down {
+  from {
+    opacity: 0;
+  }
+  to {
+    transform: rotateY(-180deg);
+    opacity: 1;
+  }
+}
+
+@keyframes show-up {
+  from {
+    opacity: 0;
+    transform: scale(0.1) rotateY(180deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotateY(-180deg);
+  }
+}
+
+.card-append {
+  margin: 1rem 0 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comentar {
+  display: flex;
+  gap: 1rem;
+}
+
+.comentar textarea {
+  width: 50%;
+  resize: vertical !important;
+  min-height: 2.5rem;
+  height: 2.5rem;
+}
+
+
+
+.comentario {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    background: var(--gray-line);
+    padding: 0.5rem;
+    border-radius: 5px;
+
+    .nome {
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: var(--title);
+    }
+    .texto {
+      font-weight: 400;
+      font-family: var(--type-second);
+      color: var(--text);
+      word-wrap: break-word;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .card-append {
+    grid-template-columns: 1fr;
+  }
+
+  .comentar textarea {
+    width: 100%;
+    height: 2rem;
+  }
+}
