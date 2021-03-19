@@ -5,7 +5,7 @@ const posts = require("../controllers/posts");
 
 const auth = require("../auth/usuario");
 
-routes.use("/posts", auth.validation);
+routes.use("/posts", auth.validation);    
 
 routes.get("/posts", posts.index);
 routes.get("/posts/:id", posts.show);

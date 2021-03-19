@@ -10,17 +10,23 @@ const auth = require("../auth/usuario");
 module.exports = {
   index(req, res) {
     const id_usuario = auth.logged(req.headers.authorization);
-    const user = Post.find();
+
+    const user = Post.find().populate("usuario");
 
     user
       .then((posts) => res.status(200).json(viewPost.renderMany(posts)))
       .catch((error) => res.status(500).json({ error: error.message }));
   },
+
   show(req, res) {
     const id = req.params.id;
+
     const id_usuario = auth.logged(req.headers.authorization);
+
     if (mongoose.Types.ObjectId.isValid(id)) {
-      const post = Post.findById(id);
+      const post = Post.findById(id)
+        .populate("usuario")
+        .populate("comentarios");
 
       post
         .then((post) => res.status(200).json(viewPost.render(post)))
@@ -33,12 +39,15 @@ module.exports = {
   },
   create(req, res) {
     const post = req.body;
-    post.id_usuario = auth.logged(req.headers.authorization);
+
+    post.usuario = auth.logged(req.headers.authorization);
+    post.lastUpdate = Date.now;
 
     Post.create(post)
       .then((post) => res.status(201).json(viewPost.render(post)))
       .catch((error) => res.status(400).json({ error: error.message }));
   },
+
   update(req, res) {
     const id = req.params.id;
 
@@ -67,8 +76,7 @@ module.exports = {
         .then((post) => {
           if (post === null)
             res.status(404).json({ error: "Post não encontrado" });
-          else
-            res.status(200).json({ message: "Post removido" });
+          else res.status(200).json({ message: "Post removido" });
         })
         .catch((error) => res.status(404).json({ error: error.message }));
     } else {
@@ -79,7 +87,9 @@ module.exports = {
     const id = req.params.id;
 
     if (mongoose.Types.ObjectId.isValid(id)) {
-      const comentario = Comentario.find({ id_post: req.params.id });
+      const comentario = Comentario.find({ id_post: req.params.id }).populate(
+        "id_usuario"
+      );
       comentario
         .then((comentarios) =>
           res.status(200).json(viewComentario.renderMany(comentarios))

@@ -1,3 +1,5 @@
+const user = require("../views/usuario");
+
 module.exports = {
   
   render(comentario) {
@@ -5,7 +7,7 @@ module.exports = {
       id: comentario._id,
       texto: comentario.texto,
       id_post: comentario.id_post,
-      id_usuario: comentario.id_usuario
+      usuario: user.render(comentario.usuario)
     };
   },
 

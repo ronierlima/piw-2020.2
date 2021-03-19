@@ -1,10 +1,13 @@
+const user = require("../views/usuario");
+
 module.exports = {
   render(post) {
     return {
       id: post._id,
       texto: post.texto,
       likes: post.likes,
-      id_usuario: post.id_usuario
+      usuario: user.render(post.usuario),
+      lastUpdate: post.lastUpdate
     };
   },
   renderMany(posts) {

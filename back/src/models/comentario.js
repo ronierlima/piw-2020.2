@@ -5,12 +5,14 @@ let schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  
   id_post: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Post",
     required: true,
   },
-  id_usuario: {
+
+  usuario: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Usuario",
     required: true,

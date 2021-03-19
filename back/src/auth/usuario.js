@@ -1,5 +1,8 @@
 const Usuario = require("../models/usuario");
 const bcrypt = require("bcrypt");
+
+const viewUsuario = require("../views/usuario");
+
 const jwt = require("jsonwebtoken");
 
 module.exports = {
@@ -8,7 +11,7 @@ module.exports = {
     Usuario.findOne({ email: req.body.email }).then((usuario) => {
       if(bcrypt.compareSync(req.body.senha, usuario.senha)){
         const token = jwt.sign({id: usuario.id},'macaco_azul_banana_rosa')
-        res.status(200).json({token: token})
+        res.status(200).json({token: token, user: viewUsuario.render(usuario)})
       }else{
         res.status(401).send("Email e/ou Senha incorretos")
       }
