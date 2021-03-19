@@ -1,0 +1,157 @@
+form {
+  display: grid;
+  grid-template-rows: 1fr 0.5fr 1fr 0.5fr 1fr;
+  gap: 5px;
+
+}
+
+.input-float {
+  display: flex;
+  min-width: 350px;
+  align-items: center;
+  position: relative;
+}
+
+
+
+.input-float input {
+  width: 100%;
+  height: 56px;
+  padding: 12px 16px 14px;
+  outline: 0;
+  border: 1px solid var(--title);
+  border-radius: 4px;
+
+  font-size: 1rem;
+  z-index: 1;
+  background-color: var(--background);
+
+  color: var(--title);
+}
+
+.input-float.error input {
+ 
+  border: 1px solid var(--red);
+}
+
+.input-float label {
+  font-size: 1rem;
+  color: #999;
+  pointer-events: none;
+  margin-left: 16px;
+  position: absolute;
+
+  z-index: 2;
+
+  text-overflow: clip;
+  cursor: auto;
+  line-height: 1.15rem;
+  transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input-float:focus-within input {
+  border: 1px solid var(--blue-dark);
+}
+
+.input-float:focus-within.error input {
+ 
+  border: 1px solid var(--red);
+}
+
+.input-float:focus-within label {
+  color: var(--blue-dark);
+  font-size: 0.75rem;
+  transform: translateY(-28px);
+  background-color: var(--background);
+  padding: 0 5px;
+}
+
+.input-float input.active {
+  border: 1px solid var(--blue-dark);
+}
+
+.input-float.error input.active {
+  border: 1px solid var(--red);
+}
+
+.input-float label.active {
+  color: var(--blue-dark);
+  font-size: 0.75rem;
+  transform: translateY(-28px);
+  background-color: var(--background);
+  padding: 0 5px;
+}
+
+.input-float.error {
+  color: var(--red);
+}
+
+.input-float.error label {
+  color: var(--red);
+}
+
+i {
+  position: absolute;
+  right: 16px;
+  z-index: 3;
+  transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--text);
+}
+i:hover {
+  color: var(--blue-dark);
+  cursor: pointer;
+}
+
+i.active {
+  color: var(--blue-dark);
+}
+i.active:hover {
+  color: var(--text);
+}
+
+/* para detectar o auto complete */
+
+input:-webkit-autofill {
+  animation-name: onAutoFillStart;
+  background-color: var(--background) !important;
+}
+
+input:-internal-autofill-selected {
+  background-color: var(--background) !important;
+}
+
+input:not(:-webkit-autofill) {
+  animation-name: onAutoFillCancel;
+}
+
+@keyframes onAutoFillStart {
+}
+
+@keyframes onAutoFillCancel {
+}
+
+
+button.form-submit {
+  border: none;
+  color: var(--white);
+  background: var(--text);
+
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow:0 5px 0 #474747;
+
+font-size: 1.25rem;
+
+  transition: filter 150ms cubic-bezier(0.4, 0, 0.2, 1)
+}
+
+button.form-submit:hover {
+  filter: brightness(1.2);
+}
+
+button.form-submit:active {
+  position:relative;
+  top:5px;
+  box-shadow:none;
+}

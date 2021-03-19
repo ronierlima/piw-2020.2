@@ -1,21 +1,19 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Service from "../../services/Services";
-import { AuthContext } from "../../contexts/auth";
 
 import "./style.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router";
+import { AuthContext } from "../../App";
 
 const eye = <FontAwesomeIcon icon={faEye} />;
 
-function FormLogin() {
-
+function LoginPage() {
   const history = useHistory();
-
-  const auth = useContext(AuthContext);
+  const { setToken, setUser } = useContext(AuthContext);
 
   const { register, handleSubmit, errors } = useForm({
     mode: "onSubmit",
@@ -28,12 +26,20 @@ function FormLogin() {
   const [autoComplete, setAutoComplete] = useState(false);
   const [passwordShown, setPasswordShown] = useState(false);
 
-  const onSubmit = (data) => {
+  async function handleLogin(data) {
     Service.user.login(data).then((res) => {
-      auth.setAuth({token: res.data});
-      history.push("/feed")
+      
+      setToken(res.data.token);
+      setUser(res.data.user);
+
+      localStorage.setItem("@App:user", JSON.stringify(res.data.user));
+      localStorage.setItem("@App:token", res.data.token);
+
+      history.push("/feed");
     });
-  };
+
+    
+  }
 
   const handleAutoFill = (e) => {
     setAutoComplete(e.animationName === "onAutoFillStart");
@@ -44,7 +50,7 @@ function FormLogin() {
   };
 
   return (
-    <div>
+    <div className="container center">
       <form>
         <div className={`input-float ${errors.email ? "error" : ""}`}>
           <input
@@ -102,7 +108,7 @@ function FormLogin() {
         <button
           className="form-submit"
           type="submit"
-          onClick={handleSubmit(onSubmit)}
+          onClick={handleSubmit(handleLogin)}
         >
           Entrar
         </button>
@@ -111,4 +117,4 @@ function FormLogin() {
   );
 }
 
-export default FormLogin;
+export default LoginPage;

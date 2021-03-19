@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import "./style.css";
 
 import Identicon from "react-identicons";
+import { AuthContext } from "../../App";
 
 function Navegador() {
-  let user = "Ronier";
+  
+  const { user, token, setToken, setUser } = useContext(AuthContext);
+
+  const history = useHistory();
+
+  function logout() {
+
+    setToken(null);
+    setUser(null);
+
+    localStorage.removeItem("@App:token");
+    localStorage.removeItem("@App:user");
+
+    history.push("/login");
+  }
 
   return (
     <header className="header">
@@ -22,45 +37,60 @@ function Navegador() {
             Send.it
           </NavLink>
         </div>
+
         <div className="items">
-          <NavLink exact className="item" to="/feed">
-            Feed
-          </NavLink>
-          <span className="separator"> | </span>
-          <NavLink className="item" to="/postar">
-            Postar
-          </NavLink>
-          <span className="separator"> | </span>
-          {user ? (
+          {token && user ? (
             <>
+              <NavLink exact className="item" to="/feed">
+                Feed
+              </NavLink>
+
+              <span className="separator"> | </span>
+
+              <NavLink className="item" to="/postar">
+                Postar
+              </NavLink>
+
+              <span className="separator"> | </span>
+
               <NavLink
                 exact
                 className="login"
                 to="/conta"
-                aria-label={`Ranek - ${user}`}
-                title={`Ranek - ${user}`}
+                aria-label={`Ranek - ${user.nome}`}
+                title={`Ranek - ${user.nome}`}
               >
-                {user}
+                {user.nome}
               </NavLink>
-
-              <NavLink
-                to="/exit"
+            
+              <div
+                onClick={() => {
+                  logout();
+                }}
                 className="user"
-                aria-label={`Ranek - ${user}`}
-                title={`Ranek - ${user}`}
+                aria-label="sair"
+                title="sair"
               >
-                <Identicon className="card-profile" string={user} />
-              </NavLink>
+                <Identicon className="card-profile" string={user.email} />
+              </div>
             </>
           ) : (
-            <NavLink
-              className="login"
-              to="/login"
-              aria-label="Ranek - Login/Criar"
-              title="Ranek - Login/Criar"
-            >
-              Login / Criar
-            </NavLink>
+            <>
+              <NavLink
+                className="item"
+                to="/login"
+                aria-label="Send.it - Login"
+                title="Send.it - Login"
+              >
+                Login
+              </NavLink>
+
+              <span className="separator"> | </span>
+
+              <NavLink className="item" to="/cadastro">
+                Cadastro
+              </NavLink>
+            </>
           )}
         </div>
       </nav>

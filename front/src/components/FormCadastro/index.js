@@ -1,27 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Service from "../../services/Services";
-import { AuthContext } from "../../contexts/auth";
+
+
 
 import "./style.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
-import { useHistory } from "react-router";
-
+import Service from "../../services/Services";
 const eye = <FontAwesomeIcon icon={faEye} />;
 
+
 function FormLogin() {
-
-  const history = useHistory();
-
-  const auth = useContext(AuthContext);
-
   const { register, handleSubmit, errors } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
   });
 
+  const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -29,10 +25,7 @@ function FormLogin() {
   const [passwordShown, setPasswordShown] = useState(false);
 
   const onSubmit = (data) => {
-    Service.user.login(data).then((res) => {
-      auth.setAuth({token: res.data});
-      history.push("/feed")
-    });
+    Service.user.cadastro(data);  
   };
 
   const handleAutoFill = (e) => {
@@ -46,6 +39,28 @@ function FormLogin() {
   return (
     <div>
       <form>
+        <div className={`input-float ${errors.email ? "error" : ""}`}>
+          <input
+            className={nome || autoComplete ? "active" : ""}
+            name="nome"
+            type="nome"
+            value={nome}
+            onAnimationStart={handleAutoFill}
+            onChange={(e) => setNome(e.target.value)}
+            ref={register({
+              required: "Este campo é essencial.",
+            })}
+            autoComplete="off"
+          />
+
+          <label
+            className={nome || autoComplete ? "active" : ""}
+            htmlFor="nome"
+          >
+            Nome
+          </label>
+        </div>
+        <div>{errors.nome && <p>* {errors.nome?.message}</p>}</div>
         <div className={`input-float ${errors.email ? "error" : ""}`}>
           <input
             className={email || autoComplete ? "active" : ""}

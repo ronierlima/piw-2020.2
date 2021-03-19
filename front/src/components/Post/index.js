@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { ReactComponent as Heart } from "../../assets/heart.svg";
 
 import Identicon from "react-identicons";
@@ -6,16 +6,21 @@ import Identicon from "react-identicons";
 import classNames from "classnames";
 
 import "./style.scss";
+import Service from "../../services/Services";
 
-function Post({ post }) {
+function Post({ post, usuario }) {
   const [curtido, setCurtido] = useState(false);
 
-  const nome = useState(post.usuario);
-  const texto = useState(post.texto);
   const [likes, setLikes] = useState(post.likes);
 
   const [verComentarios, setVerComentarios] = useState(false);
+  const [comentarios, setComentarios] = useState([]);
+
   const [curtirClasses, setCurtirClasses] = useState("card-actions");
+
+  useEffect(() => {
+    getComentarios();
+  }, []);
 
   function curtir() {
     setCurtido(true);
@@ -35,16 +40,22 @@ function Post({ post }) {
     curtido ? descurtir() : curtir();
   }
 
+  function getComentarios() {
+    Service.posts.getComentarios(post.id).then((res) => {
+      setComentarios(res.data);
+    });
+  }
+
   return (
     <div className="card">
       <div className="card-header">
-        <Identicon className="card-profile" string={nome} />
-        <span>{nome}</span>
+        <Identicon className="card-profile" string={usuario.email} />
+        <span>{usuario.nome}</span>
       </div>
-      <div className="card-body">{texto}</div>
+      <div className="card-body">{post.texto}</div>
       <div className="card-footer">
         <span onClick={() => setVerComentarios(!verComentarios)}>
-          4 comentários
+          {comentarios.length} comentários
         </span>
 
         <div className={curtirClasses}>
@@ -58,32 +69,26 @@ function Post({ post }) {
           ></Heart>
         </div>
       </div>
+
       {verComentarios && (
         <div className="card-append">
           <header className="comentar">
-            <Identicon className="card-profile" string={nome} />
+            <Identicon className="card-profile" string={usuario.email} />
             <textarea placeholder="Faça seu comentário"></textarea>
           </header>
 
-          <div className="comentario">
-            <Identicon className="profile" string={nome} />
-            <div>
-              <span className="nome">{nome}</span>
-              <span className="texto">
-                aaaaaaa aaaaaaaaaaa aaaaaaaaaaa aaaaaaaaaaaaaaa
-              </span>
+          {comentarios.map((comentario) => (
+            <div className="comentario">
+              <Identicon className="profile" string={usuario.email} />
+              <div>
+                <span className="nome">{usuario.nome}</span>
+                <span className="texto">
+                  {comentario.texto}
+                </span>
+              </div>
             </div>
-          </div>
+          ))}
 
-          <div className="comentario">
-            <Identicon className="profile" string={nome} />
-            <div>
-              <span className="nome">Ronier Lima</span>
-              <span className="texto">
-                lorem texto teste de comentario
-              </span>
-            </div>
-          </div>
         </div>
       )}
     </div>
