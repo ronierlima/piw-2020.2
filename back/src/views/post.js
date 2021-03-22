@@ -7,7 +7,7 @@ module.exports = {
       texto: post.texto,
       likes: post.likes,
       usuario: user.render(post.usuario),
-      lastUpdate: post.lastUpdate
+      updateAt: post.updateAt
     };
   },
   renderMany(posts) {
