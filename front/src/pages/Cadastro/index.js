@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-
+import Logo from "../../assets/logo.svg";
 
 import "./style.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import Service from "../../services/Services";
+import { useHistory } from "react-router";
+
 const eye = <FontAwesomeIcon icon={faEye} />;
 
+function Cadastro() {
+  const history = useHistory();
 
-function FormLogin() {
   const { register, handleSubmit, errors } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
@@ -25,7 +28,9 @@ function FormLogin() {
   const [passwordShown, setPasswordShown] = useState(false);
 
   const onSubmit = (data) => {
-    Service.user.cadastro(data);  
+    Service.user.cadastro(data).then(() => {
+      history.push("/login");
+    });
   };
 
   const handleAutoFill = (e) => {
@@ -37,7 +42,13 @@ function FormLogin() {
   };
 
   return (
-    <div>
+    <div className="container center">
+      <div className="form-logo">
+        <div className="img-logo">
+          <img src={Logo} alt="logo" />
+        </div>
+        <p>Cadastro</p>
+      </div>
       <form>
         <div className={`input-float ${errors.email ? "error" : ""}`}>
           <input
@@ -119,11 +130,11 @@ function FormLogin() {
           type="submit"
           onClick={handleSubmit(onSubmit)}
         >
-          Entrar
+          Realizar Cadastro
         </button>
       </form>
     </div>
   );
 }
 
-export default FormLogin;
+export default Cadastro;

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import Service from "../../services/Services";
 
@@ -9,10 +9,13 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router";
 import { AuthContext } from "../../App";
 
+import Logo from "../../assets/logo.svg";
+
 const eye = <FontAwesomeIcon icon={faEye} />;
 
 function LoginPage() {
   const history = useHistory();
+
   const { setToken, setUser } = useContext(AuthContext);
 
   const { register, handleSubmit, errors } = useForm({
@@ -22,23 +25,26 @@ function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [responseErros, setResponseErros] = useState("");
 
   const [autoComplete, setAutoComplete] = useState(false);
   const [passwordShown, setPasswordShown] = useState(false);
 
   async function handleLogin(data) {
-    Service.user.login(data).then((res) => {
-      
-      setToken(res.data.token);
-      setUser(res.data.user);
+    Service.user
+      .login(data)
+      .then((res) => {
+        setToken(res.data.token);
+        setUser(res.data.user);
 
-      localStorage.setItem("@App:user", JSON.stringify(res.data.user));
-      localStorage.setItem("@App:token", res.data.token);
+        localStorage.setItem("@App:user", JSON.stringify(res.data.user));
+        localStorage.setItem("@App:token", res.data.token);
 
-      history.push("/feed");
-    });
-
-    
+        history.push("/feed");
+      })
+      .catch((err) => {
+        setResponseErros(err.response.data);
+      });
   }
 
   const handleAutoFill = (e) => {
@@ -51,6 +57,12 @@ function LoginPage() {
 
   return (
     <div className="container center">
+      <div className="form-logo">
+        <div className="img-logo">
+          <img src={Logo} alt="logo" />
+        </div>
+        <p>Login</p>
+      </div>
       <form>
         <div className={`input-float ${errors.email ? "error" : ""}`}>
           <input
@@ -112,6 +124,12 @@ function LoginPage() {
         >
           Entrar
         </button>
+        <div></div>
+        {responseErros && (
+          <div className="response-error">
+            <p>{responseErros}</p>{" "}
+          </div>
+        )}
       </form>
     </div>
   );

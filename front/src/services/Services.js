@@ -10,8 +10,13 @@ const Service = {
     },
   },
   posts: {
+
     async create(post) {
       return api.post(`/posts`,  post);
+    },
+
+    async getOne(id) {
+      return api.get(`/posts/${id}`);
     },
 
     async getAll(params) {
@@ -22,6 +27,14 @@ const Service = {
 
     async getComentarios(id) {
       return api.get(`/posts/${id}/comentarios`);
+    },
+
+    async like(id) {
+      return api.post(`/posts/${id}/like`);
+    },
+
+    async getLikes(id) {
+      return api.get(`/posts/${id}/likes`);
     },
   },
 

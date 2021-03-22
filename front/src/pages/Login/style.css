@@ -1,8 +1,54 @@
 form {
   display: grid;
-  grid-template-rows: 1fr 0.5fr 1fr 0.5fr 1fr;
+  grid-template-rows: 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr;
   gap: 5px;
+}
 
+.form-logo {
+  display: flex;
+
+  align-items: center;
+  max-width: 350px;
+  width: 100%;
+  background-color: var(--text);
+  justify-content: center;
+  animation: show 4s forwards;
+  position: relative;
+}
+
+.form-logo .img-logo {
+  left: 0;
+  position: absolute;
+  max-width: 64px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.form-logo p {
+  color: var(--white);
+  font-size: 2rem;
+  animation: show 4s forwards;
+}
+
+
+@keyframes show {
+  from {
+    width: 64px;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.response-error {
+  border-radius: 4px;
+  max-width: 350px;
+  width: 100%;
+  background-color: var(--red);
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 56px;
 }
 
 .input-float {
@@ -11,8 +57,6 @@ form {
   align-items: center;
   position: relative;
 }
-
-
 
 .input-float input {
   width: 100%;
@@ -30,7 +74,6 @@ form {
 }
 
 .input-float.error input {
- 
   border: 1px solid var(--red);
 }
 
@@ -55,7 +98,6 @@ form {
 }
 
 .input-float:focus-within.error input {
- 
   border: 1px solid var(--red);
 }
 
@@ -131,7 +173,6 @@ input:not(:-webkit-autofill) {
 @keyframes onAutoFillCancel {
 }
 
-
 button.form-submit {
   border: none;
   color: var(--white);
@@ -139,11 +180,11 @@ button.form-submit {
 
   border-radius: 4px;
   cursor: pointer;
-  box-shadow:0 5px 0 #474747;
+  box-shadow: 0 5px 0 #474747;
 
-font-size: 1.25rem;
+  font-size: 1.25rem;
 
-  transition: filter 150ms cubic-bezier(0.4, 0, 0.2, 1)
+  transition: filter 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 button.form-submit:hover {
@@ -151,7 +192,7 @@ button.form-submit:hover {
 }
 
 button.form-submit:active {
-  position:relative;
-  top:5px;
-  box-shadow:none;
+  position: relative;
+  top: 5px;
+  box-shadow: none;
 }

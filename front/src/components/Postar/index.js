@@ -6,6 +6,7 @@ import "./style.css";
 function Postar() { 
   return(
     <div className="container">
+
       <FormPostar />
     </div>
   )

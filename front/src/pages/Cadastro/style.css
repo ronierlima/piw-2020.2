@@ -1,8 +1,32 @@
 form {
   display: grid;
-  grid-template-rows: 1fr 0.5fr 1fr 0.5fr 1fr;
+  grid-template-rows: 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr;
   gap: 5px;
 
+}
+
+.form-logo {
+  display: flex;
+
+  align-items: center;
+  max-width: 350px;
+  background-color: var(--text);
+  justify-content: center;
+  animation: show 4s forwards;
+  position: relative;
+}
+
+.form-logo .img-logo {
+  left: 0;
+  position: absolute;
+  max-width: 64px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.form-logo p {
+  color: var(--white);
+  
+  animation: show-down 1s;
 }
 
 .input-float {
@@ -12,7 +36,23 @@ form {
   position: relative;
 }
 
+@keyframes show-down {
+  from {
+    font-size: 1rem;
+  }
+  to {
+    font-size: 2rem;
+  }
+}
 
+@keyframes show {
+  from {
+    width: 64px;
+  }
+  to {
+    width: 100%;
+  }
+}
 
 .input-float input {
   width: 100%;

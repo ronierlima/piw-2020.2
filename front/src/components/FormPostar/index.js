@@ -2,25 +2,24 @@ import React, { useContext } from "react";
 
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
-import AuthContext from "../../App";
+import { AuthContext } from "../../App";
 import Service from "../../services/Services";
 
 import "./style.css";
 
 function FormPostar() {
-
   const history = useHistory();
-  const auth = useContext(AuthContext);
 
-  const { register, handleSubmit, errors } = useForm({
+  const { user } = useContext(AuthContext);
+
+  const { register, handleSubmit} = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
   });
 
   const onSubmit = (data) => {
-    data.usuario = 
+    data.usuario = user.id; 
     Service.posts.create(data).then((res) => {
-      
       history.push("/feed");
     });
   };

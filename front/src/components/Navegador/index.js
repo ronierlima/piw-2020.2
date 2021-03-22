@@ -10,6 +10,7 @@ function Navegador() {
   
   const { user, token, setToken, setUser } = useContext(AuthContext);
 
+
   const history = useHistory();
 
   function logout() {

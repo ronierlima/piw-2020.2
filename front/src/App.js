@@ -12,9 +12,10 @@ import { createContext, useState } from "react";
 import Navegador from "./components/Navegador";
 import Postar from "./components/Postar";
 
+
 import Feed from "./pages/Feed";
-import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Cadastro from "./pages/Cadastro";
 
 import Make from "./assets/make.svg";
 import NotFound from "./assets/notfound.svg";
@@ -62,6 +63,15 @@ function App() {
               <Redirect to={`${process.env.PUBLIC_URL}/login`} />
             ) : (
               <Postar />
+            )}
+          </Route>
+
+          <Route exact path={`${process.env.PUBLIC_URL}/cadastro`}>
+            {token === null ? (
+              <Cadastro />
+            ) : (
+              <Redirect to={`${process.env.PUBLIC_URL}/feed`} />
+              
             )}
           </Route>
 
