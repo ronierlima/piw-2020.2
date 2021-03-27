@@ -1,6 +1,7 @@
 import api from "./api";
 
 const Service = {
+  
   user: {
     async cadastro(user) {
       return api.post("/usuarios", user);
