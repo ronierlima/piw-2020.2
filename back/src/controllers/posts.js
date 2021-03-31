@@ -118,12 +118,37 @@ module.exports = {
     }
   },
 
+  deslike(req, res) {
+    const id = req.params.id;
+
+    const id_usuario = auth.logged(req.headers.authorization);
+
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      Like.findOneAndDelete({ post: id, usuario: id_usuario }).then((like) => {
+        if (like === null)
+          res.status(404).json({ error: "Post não encontrado" });
+        else {
+          Post.findById(id).then((post) => {
+            post.likes = post.likes - 1;
+
+            Post.findOneAndUpdate({ _id: id }, post).then(() => {
+              res.status(204).json(like);
+            });
+          });
+          res.status(204).end();
+        }
+      });
+    } else {
+      res.status(404).json({ error: "Post não encontrado" });
+    }
+  },
+
   comentarios(req, res) {
     const id = req.params.id;
 
     if (mongoose.Types.ObjectId.isValid(id)) {
       const comentario = Comentario.find({ id_post: req.params.id }).populate(
-        "id_usuario"
+        "usuario"
       );
       comentario
         .then((comentarios) =>

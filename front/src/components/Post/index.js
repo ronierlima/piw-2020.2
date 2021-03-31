@@ -18,13 +18,14 @@ function Post({ post, usuario }) {
 
   const [verComentarios, setVerComentarios] = useState(false);
   const [comentarios, setComentarios] = useState([]);
+  const [comentario, setComentario] = useState("");
 
   const [curtirClasses, setCurtirClasses] = useState("card-actions");
 
   useEffect(() => {
     getComentarios();
     getLikes();
-  }, []); 
+  }, []);
 
   useEffect(() => {
     getPost();
@@ -41,8 +42,10 @@ function Post({ post, usuario }) {
 
   function descurtir() {
     if (curtido) {
-      setCurtido(false);
-      setCurtirClasses(classNames("card-actions", "descurtido"));
+      Service.posts.deslike(postId).then(() => {
+        setCurtido(false);
+        setCurtirClasses(classNames("card-actions", "descurtido"));
+      });
     }
   }
 
@@ -61,6 +64,21 @@ function Post({ post, usuario }) {
       setComentarios(res.data);
     });
   }
+  function handleComentar(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.stopPropagation();
+      comentar();
+    }
+  }
+
+  function comentar() {
+    Service.posts.comentar(post.id, comentario).then((res) => {
+      getComentarios();
+      console.log(res.data);
+      setComentario("");
+    });
+  }
 
   function getLikes() {
     Service.posts.getLikes(postId).then((res) => {
@@ -68,10 +86,10 @@ function Post({ post, usuario }) {
 
       res.data.map((like) => arraylikes.push(like.usuario._id));
 
-
       setCurtido(arraylikes.includes(user.id));
 
-      if (curtido) setCurtirClasses(classNames("card-actions", "initial-curtido"));
+      if (curtido)
+        setCurtirClasses(classNames("card-actions", "initial-curtido"));
     });
   }
 
@@ -102,15 +120,25 @@ function Post({ post, usuario }) {
       {verComentarios && (
         <div className="card-append">
           <header className="comentar">
-            <Identicon className="card-profile" string={usuario.email} />
-            <textarea placeholder="Faça seu comentário"></textarea>
+            <Identicon className="card-profile" string={user.email} />
+            <textarea
+              placeholder="Faça seu comentário"
+              value={comentario}
+              onChange={(e) => {
+                setComentario(e.target.value);
+              }}
+              onKeyPress={handleComentar}
+            ></textarea>
           </header>
 
           {comentarios.map((comentario) => (
             <div className="comentario">
-              <Identicon className="profile" string={usuario.email} />
+              <Identicon
+                className="profile"
+                string={comentario.usuario.email}
+              />
               <div>
-                <span className="nome">{usuario.nome}</span>
+                <span className="nome">{comentario.usuario.nome}</span>
                 <span className="texto">{comentario.texto}</span>
               </div>
             </div>

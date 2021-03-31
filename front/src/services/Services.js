@@ -1,7 +1,13 @@
 import api from "./api";
 
-const Service = {
+api.interceptors.request.use(async (config) => {
   
+  config.headers.Authorization = localStorage.getItem("@App:token");
+
+  return config;
+});
+
+const Service = {
   user: {
     async cadastro(user) {
       return api.post("/usuarios", user);
@@ -11,9 +17,8 @@ const Service = {
     },
   },
   posts: {
-
     async create(post) {
-      return api.post(`/posts`,  post);
+      return api.post(`/posts`, post);
     },
 
     async getOne(id) {
@@ -30,8 +35,15 @@ const Service = {
       return api.get(`/posts/${id}/comentarios`);
     },
 
+    async comentar(id, comentario) {
+      return api.post(`/comentarios`, { id_post: id, texto: comentario });
+    },
+
     async like(id) {
       return api.post(`/posts/${id}/like`);
+    },
+    async deslike(id) {
+      return api.delete(`/posts/${id}/deslike`);
     },
 
     async getLikes(id) {

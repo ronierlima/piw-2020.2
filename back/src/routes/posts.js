@@ -13,6 +13,7 @@ routes.post("/posts", posts.create);
 routes.put("/posts/:id", posts.update);
 routes.delete("/posts/:id", posts.delete);
 routes.post("/posts/:id/like", posts.like);
+routes.delete("/posts/:id/deslike", posts.deslike);
 routes.get("/posts/:id/comentarios", posts.comentarios);
 routes.get("/posts/:id/likes", posts.likes);
 
